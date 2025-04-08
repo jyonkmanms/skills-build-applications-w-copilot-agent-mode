@@ -20,7 +20,8 @@ def api_root(request, format=None):
     """
     Root API endpoint for OctoFit Tracker
     """
-    base_url = request.build_absolute_uri('/').rstrip('/')
+    # Use the codespace URL for the API endpoints
+    base_url = "https://supreme-orbit-v95qgwwpgpv3w6vv-8000.app.github.dev"
     return Response({
         'users': f"{base_url}/api/users/",
         'teams': f"{base_url}/api/teams/",

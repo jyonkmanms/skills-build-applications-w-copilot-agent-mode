@@ -10,8 +10,8 @@ SECRET_KEY = 'django-insecure-octofit-tracker-secret-key-123456789'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Allow all hosts
-ALLOWED_HOSTS = ['*']
+# Allow specific hosts
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'supreme-orbit-v95qgwwpgpv3w6vv-8000.app.github.dev']
 
 # Application definition
 INSTALLED_APPS = [
@@ -59,13 +59,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 
-# Configure MongoDB with djongo engine
+# Configure database - using SQLite for easier setup
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'octofit_db',
-        'HOST': 'localhost',
-        'PORT': 27017,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
