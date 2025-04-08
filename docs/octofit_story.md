@@ -8,7 +8,7 @@ After attending a professional development conference on "Technology Integration
 1. Make fitness tracking fun and engaging
 2. Create positive peer pressure through friendly competition
 3. Allow him to monitor student progress remotely
-4. Provide personalized guidance based on individual fitness levels
+4. Provide personalized guidance based on individual fitness levels.
 
 ## The Birth of OctoFit Tracker
 
