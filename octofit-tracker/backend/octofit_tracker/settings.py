@@ -59,10 +59,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 
-# Replace SQLite database with MongoDB
+# Configure MongoDB with djongo engine
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.dummy',  # Using pymongo directly instead of djongo
+        'ENGINE': 'djongo',
+        'NAME': 'octofit_db',
+        'HOST': 'localhost',
+        'PORT': 27017,
     }
 }
 
