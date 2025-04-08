@@ -6,7 +6,7 @@ function Activities() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('https://supreme-orbit-v95qgwwpgpv3w6vv-8000.app.github.dev/api/activity/')
+    fetch('https://supreme-orbit-v95qgwwpgpv3w6vv-8000.app.github.dev/api/activities/')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

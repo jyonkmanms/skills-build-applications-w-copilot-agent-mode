@@ -18,7 +18,7 @@ try:
     # MongoDB Collections
     users_collection = db.users
     teams_collection = db.teams
-    activity_collection = db.activity
+    activities_collection = db.activities
     leaderboard_collection = db.leaderboard
     workouts_collection = db.workouts
     
@@ -61,7 +61,7 @@ except Exception as e:
     # Initialize mock collections
     users_collection = MockCollection("users")
     teams_collection = MockCollection("teams")
-    activity_collection = MockCollection("activity")
+    activities_collection = MockCollection("activities")
     leaderboard_collection = MockCollection("leaderboard")
     workouts_collection = MockCollection("workouts")
 

@@ -7,7 +7,7 @@ from bson.errors import InvalidId
 
 from .models import (
     User, Team, Activity, Leaderboard, Workout,
-    users_collection, teams_collection, activity_collection, 
+    users_collection, teams_collection, activities_collection, 
     leaderboard_collection, workouts_collection
 )
 from .serializers import (
@@ -25,7 +25,7 @@ def api_root(request, format=None):
     return Response({
         'users': f"{base_url}/api/users/",
         'teams': f"{base_url}/api/teams/",
-        'activity': f"{base_url}/api/activity/",
+        'activities': f"{base_url}/api/activities/",
         'leaderboard': f"{base_url}/api/leaderboard/",
         'workouts': f"{base_url}/api/workouts/"
     })
@@ -142,7 +142,7 @@ class ActivityViewSet(APIView):
     def get(self, request, activity_id=None):
         if activity_id:
             try:
-                activity_data = activity_collection.find_one({"_id": ObjectId(activity_id)})
+                activity_data = activities_collection.find_one({"_id": ObjectId(activity_id)})
                 if activity_data:
                     activity = Activity.from_mongo(activity_data)
                     serializer = ActivitySerializer(activity)
@@ -151,7 +151,7 @@ class ActivityViewSet(APIView):
             except InvalidId:
                 return Response({"detail": "Invalid ID format"}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            activities_data = list(activity_collection.find())
+            activities_data = list(activities_collection.find())
             activities = [Activity.from_mongo(activity_data) for activity_data in activities_data]
             serializer = ActivitySerializer(activities, many=True)
             return Response(serializer.data)
@@ -160,13 +160,13 @@ class ActivityViewSet(APIView):
         serializer = ActivitySerializer(data=request.data)
         if serializer.is_valid():
             activity = serializer.create(serializer.validated_data)
-            activity_collection.insert_one(activity.to_mongo())
+            activities_collection.insert_one(activity.to_mongo())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, activity_id):
         try:
-            activity_data = activity_collection.find_one({"_id": ObjectId(activity_id)})
+            activity_data = activities_collection.find_one({"_id": ObjectId(activity_id)})
             if not activity_data:
                 return Response({"detail": "Activity not found"}, status=status.HTTP_404_NOT_FOUND)
             
@@ -174,7 +174,7 @@ class ActivityViewSet(APIView):
             serializer = ActivitySerializer(activity, data=request.data, partial=True)
             if serializer.is_valid():
                 updated_activity = serializer.update(activity, serializer.validated_data)
-                activity_collection.update_one(
+                activities_collection.update_one(
                     {"_id": ObjectId(activity_id)},
                     {"$set": updated_activity.to_mongo()}
                 )
@@ -185,7 +185,7 @@ class ActivityViewSet(APIView):
 
     def delete(self, request, activity_id):
         try:
-            result = activity_collection.delete_one({"_id": ObjectId(activity_id)})
+            result = activities_collection.delete_one({"_id": ObjectId(activity_id)})
             if result.deleted_count:
                 return Response(status=status.HTTP_204_NO_CONTENT)
             return Response({"detail": "Activity not found"}, status=status.HTTP_404_NOT_FOUND)
